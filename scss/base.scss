@@ -1,0 +1,21 @@
+@use './variables' as *;
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: $color-white;
+}
+
+.page-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-container {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+

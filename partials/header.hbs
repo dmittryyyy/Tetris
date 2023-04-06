@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="turbo-cache-control" content="no-cache">
+  <title>
+    {{#if pageTitle}}
+      {{pageTitle}}
+    {{/if}}
+  </title>
+  <link rel="stylesheet" href="app.css"/>
+  <script src="vendor.js" async></script>
+  <script src="app.js" async></script>
+  <script src="/webpack-dev-server.js" async></script>
+</head>
+
+<body data-controller="tetris">
+<div class="page-container">
+<header class="header">
+  <h1 class="header__title">
+    Tetris
+  </h1>
+</header>

@@ -1,0 +1,9 @@
+@use '../variables' as *;
+
+.footer {
+  background: rgb($color-black, 0.64);
+  color: $color-white;
+  padding: 12px 0;
+  text-align: center;
+  border-top: 2px solid $color-white;
+}

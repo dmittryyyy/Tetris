@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol>
+    <svg id="smile" viewBox="0 0 400 400">
+      <defs>
+      </defs>
+      <g transform="matrix(3.13 0 0 3.13 200 200)" id="Layer_2">
+        <circle
+          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(249,191,68); fill-rule: nonzero; opacity: 1;"
+          cx="0" cy="0" r="24"/>
+      </g>
+      <g transform="matrix(3.13 0 0 3.13 165.63 191.4)" id="Layer_1">
+        <ellipse
+          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(56,42,18); fill-rule: nonzero; opacity: 1;"
+          cx="0" cy="0" rx="2.5" ry="2.87"/>
+      </g>
+      <g transform="matrix(3.13 0 0 3.13 234.37 191.4)" id="Layer_1">
+        <ellipse
+          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(56,42,18); fill-rule: nonzero; opacity: 1;"
+          cx="0" cy="0" rx="2.5" ry="2.87"/>
+      </g>
+      <g transform="matrix(3.13 0 0 3.13 200 219)" id="Layer_1">
+        <path
+          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(56,42,18); fill-rule: nonzero; opacity: 1;"
+          transform=" translate(-32, -38.08)"
+          d="M 32 41.157 A 5.161 5.161 0 0 1 26.845 36 a 1 1 0 0 1 2 0 a 3.155 3.155 0 1 0 6.311 0 a 1 1 0 0 1 2 0 A 5.166 5.166 0 0 1 32 41.157 Z"
+          stroke-linecap="round"/>
+      </g>
+    </svg>
+  </symbol>
+</svg>

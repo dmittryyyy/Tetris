@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  column-gap: inherit;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  height: 100%;
+  // Hide system scrollbar in order to make custom one:
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-tap-highlight-color: rgba(#fff, 0);
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+input,
+a,
+textarea {
+  &:focus {
+    outline: none;
+  }
+}
+
+input,
+textarea {
+  -webkit-appearance: none;
+
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+button {
+  background-color: transparent;
+  outline-color: transparent;
+  border: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+  // Remove dotted outline for buttons in FireFox:
+  &::-moz-focus-inner {
+    border: 0;
+  }
+}
+
+mark {
+  background-color: transparent;
+}
+
+svg[role="img"] {
+  pointer-events: none;
+  overflow: visible;
+}
+
+img:not([src]):not([srcset]) {
+  visibility: hidden;
+}
