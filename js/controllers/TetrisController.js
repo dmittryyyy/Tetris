@@ -2,13 +2,11 @@ import { Controller } from 'stimulus';
 import { colors, figures } from '../../figures';
 
 export default class TetrisController extends Controller {
-  static targets = ['canvas', 'count'];
+ static targets = ['canvas', 'count', 'loss', 'score', 'lines', 'blocks', 'next'];
 
-  canvas = document.getElementById('game');
+  canvasContext = this.canvasTarget.getContext('2d');
 
-  context = this.canvas.getContext('2d');
-
-  sizeCell = 32;
+  sizeCell = 34;
 
   figuresSequence = [];
 
@@ -30,10 +28,10 @@ export default class TetrisController extends Controller {
   }
 
   generateEmptyCell = () => {
-    for (let row = -2; row < 20; row++) {
+    for (let row = -1; row < 20; row++) {
       this.playField[row] = [];
 
-      for (let col = 0; col < 14; col++) {
+      for (let col = -1; col < 14; col++) {
         this.playField[row][col] = 0;
       }
     }
@@ -60,6 +58,8 @@ export default class TetrisController extends Controller {
     if (this.figuresSequence.length === 0) {
       this.generateSequence();
     }
+
+    this.blocksTarget.innerText++;
 
     const name = this.figuresSequence.pop();
     const matrix = figures[name];
@@ -109,6 +109,8 @@ export default class TetrisController extends Controller {
     }
     for (let row = this.playField.length - 1; row >= 0;) {
       if (this.playField[row].every((cell) => !!cell)) {
+        this.linesTarget.innerText++;
+        this.scoreTarget.innerText = Number(this.scoreTarget.innerText) + 100;
         for (let r = row; r >= 0; r--) {
           for (let c = 0; c < this.playField[r].length; c++) {
             this.playField[r][c] = this.playField[r - 1][c];
@@ -143,6 +145,7 @@ export default class TetrisController extends Controller {
 
     if (e.keyCode === 40) {
       const row = this.figure.row + 1;
+      this.scoreTarget.innerText++;
       if (!this.isValidMove(this.figure.matrix, row, this.figure.coll)) {
         this.figure.row = row - 1;
         this.figureSetting();
@@ -155,27 +158,19 @@ export default class TetrisController extends Controller {
   showGameOver = () => {
     cancelAnimationFrame(this.gameInit);
     this.gameOver = true;
-
-    this.context.fillStyle = 'black';
-    this.context.globalAlpha = 0.75;
-    this.context.fillRect(0, this.canvas.height / 2 - 30, this.canvas.width, 60);
-    this.context.globalAlpha = 1;
-    this.context.fillStyle = 'white';
-    this.context.font = '36px monospace';
-    this.context.textAlign = 'center';
-    this.context.textBaseline = 'middle';
-    this.context.fillText('GAME OVER!', this.canvas.width / 2, this.canvas.height / 2);
+    this.lossTarget.style.setProperty('--width', this.canvasTarget.width);
+    this.lossTarget.classList.add('show');
   };
 
   buildField = () => {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.canvasContext.clearRect(0, 0, this.canvasTarget.width, this.canvasTarget.height);
 
     for (let row = 0; row < 20; row++) {
       for (let col = 0; col < 15; col++) {
         if (this.playField[row][col]) {
           const name = this.playField[row][col];
-          this.context.fillStyle = colors[name];
-          this.context.fillRect(
+          this.canvasContext.fillStyle = colors[name];
+          this.canvasContext.fillRect(
             col * this.sizeCell, row * this.sizeCell, this.sizeCell, this.sizeCell,
           );
         }
@@ -198,12 +193,12 @@ export default class TetrisController extends Controller {
         }
       }
       const { name } = this.figure;
-      this.context.fillStyle = colors[name];
+      this.canvasContext.fillStyle = colors[name];
 
       for (let row = 0; row < this.figure.matrix.length; row++) {
         for (let col = 0; col < this.figure.matrix[row].length; col++) {
           if (this.figure.matrix[row][col]) {
-            this.context.fillRect(
+            this.canvasContext.fillRect(
               (this.figure.coll + col) * this.sizeCell,
               (this.figure.row + row) * this.sizeCell,
               this.sizeCell - 1, this.sizeCell - 1,

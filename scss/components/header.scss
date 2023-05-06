@@ -7,3 +7,11 @@
   text-align: center;
   border-bottom: 2px solid $color-white;
 }
+
+.header__title {
+  font-size: 64px;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(#FC3F5B, #FEA216, #61E646, #00E5F7, #F230F0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

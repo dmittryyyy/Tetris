@@ -2,13 +2,66 @@
 
 .main {
   height: 100%;
+  padding: 12px 24px;
   background-color: rgba($color-black, 0.64);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+}
+
+.main__count {
+  grid-column: span 3;
+  background-color: rgba($color-black, 0.64);
+  border: 1px solid $color-white;
+  padding: 32px;
+}
+
+.main__count-item {
+  color: $color-white;
+  font-size: 24px;
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.main__wrapper-game {
+  grid-column: span 6;
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .main__field-game {
+  background-color: rgba($color-black, 0.64);
+  border: 1px solid $color-white;
+}
+
+.main__game-over {
+  position: absolute;
+  width: calc(var(--width) * 1px);
+  color: $color-pink;
+  top: 40%;
+  background-color: rgba($color-black, 0.64);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+
+  p {
+    font-size: 48px;
+    padding: 32px;
+    justify-content: center;
+  }
+
+  &.show {
+    opacity: 1;
+  }
+}
+
+.main__wrapper-next {
+  grid-column: span 3;
+}
+
+.main__next {
   border: 1px solid $color-white;
   background-color: rgba($color-black, 0.64);
 }
