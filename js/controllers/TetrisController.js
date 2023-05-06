@@ -20,11 +20,20 @@ export default class TetrisController extends Controller {
 
   count = 0;
 
+  factsController;
+
   connect() {
+    this.calculateSizeGame();
+    window.addEventListener('resize', this.calculateSizeGame);
     this.generateEmptyCell();
     this.figure = this.nextFigure();
     document.addEventListener('keydown', this.moveFigure);
     requestAnimationFrame(this.gameInit);
+  }
+
+  calculateSizeGame = () => {
+    const winHeight = window.innerHeight;
+    this.canvasTarget.height = winHeight - 170;
   }
 
   generateEmptyCell = () => {
@@ -121,6 +130,9 @@ export default class TetrisController extends Controller {
       }
     }
     this.figure = this.nextFigure();
+    this.factsController = this.application.controllers
+      .find((controller) => controller.context.identifier === 'facts');
+    this.factsController.randomFact();
   };
 
   moveFigure = ((e) => {

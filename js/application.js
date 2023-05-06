@@ -3,11 +3,13 @@ import { Application } from 'stimulus';
 // import your controllers
 import {
   TetrisController,
+  BasementFactController,
 } from './controllers';
 
 // connection your controllers
 const application = Application.start();
 application.register('tetris', TetrisController);
+application.register('facts', BasementFactController);
 
 document.addEventListener('turbo:click', () => {
   document.body.classList.add('turbolinks--loading');

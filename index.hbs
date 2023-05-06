@@ -1,5 +1,5 @@
 {{> partials/header pageTitle="Tetris"}}
-<section class="main">
+<section class="main" data-controller="tetris">
   <div class="main__count">
     <p class="main__count-item">Score: <span data-tetris-target="score">0</span></p>
     <p class="main__count-item">Lines: <span data-tetris-target="lines">0</span></p>
@@ -8,10 +8,10 @@
   <div class="main__wrapper-game">
     <canvas class="main__field-game" id="game" data-tetris-target="canvas"
             width='480px'
-            height='720px'>
+            height='680px'>
     </canvas>
     <div class="main__game-over" data-tetris-target="loss">
-      <p>GAME OVER!</p>
+      <p>GAME OVER</p>
     </div>
   </div>
   <div class="main__wrapper-next">
