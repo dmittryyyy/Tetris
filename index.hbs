@@ -1,24 +1,18 @@
 {{> partials/header pageTitle="Tetris"}}
-<section class="main" data-controller="tetris">
-  <div class="main__count">
-    <p class="main__count-item">Score: <span data-tetris-target="score">0</span></p>
-    <p class="main__count-item">Lines: <span data-tetris-target="lines">0</span></p>
-    <p class="main__count-item">Blocks: <span data-tetris-target="blocks">0</span></p>
-  </div>
-  <div class="main__wrapper-game">
-    <canvas class="main__field-game" id="game" data-tetris-target="canvas"
-            width='480px'
-            height='680px'>
-    </canvas>
-    <div class="main__game-over" data-tetris-target="loss">
-      <p>GAME OVER</p>
+<div class="tetris grid-container" data-controller="tetris">
+  <div class="tetris__score" data-tetris-target="score"></div>
+  <div class="tetris__game-field-wrapper">
+    <div class="tetris__game-field" data-tetris-target='field'></div>
+    <div class="tetris__game-over hidden" data-tetris-target='loss'>
+      <p>Game Over</p>
+    </div>
+    <div class="tetris__paused hidden" data-tetris-target="pause">
+      <p>Paused</p>
     </div>
   </div>
-  <div class="main__wrapper-next">
-    <canvas class="main__next" id="game" data-tetris-target="next"
-            width='280px'
-            height='360px'>
-    </canvas>
+  <div class="tetris__next-wrapper">
+    <p>NEXT: </p>
+    <div class="tetris__next-figure" data-tetris-target='next'></div>
   </div>
-</section>
-{{> partials/footer}}
+</div>
+{{> partials/footer }}

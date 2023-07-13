@@ -1,6 +1,6 @@
 const path = require('path');
 
-const devServerHost = '0.0.0.0';
+const devServerHost = 'localhost';
 const devServerPort = 3000;
 const assetsDir = '/';
 const outputDir = '../build';
