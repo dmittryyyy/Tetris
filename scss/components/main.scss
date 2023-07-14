@@ -29,7 +29,10 @@
 }
 
 .tetris__game-field div, .tetris__next-figure div {
-  border-radius: 8px;
+  border-radius: 4px;
+  @include screen-medium-up {
+    border-radius: 8px;
+  }
   transition: transform .25s linear;
 }
 
@@ -44,42 +47,37 @@
   border-bottom: 3px solid rgba($color-black, .3);
 }
 
-.tetris__game-over, .tetris__paused {
-  position: absolute;
-  width: 600px;
-  padding: 16px;
-  color: $color-pink;
-  top: 40%;
-  margin: 0 auto;
-  background-color: rgba($color-black, 0.8);
-  text-align: center;
-  pointer-events: none;
-
-  p {
-    font-size: 120px;
-    justify-content: center;
-  }
-
-  &.hidden {
-    opacity: 0;
-  }
-}
-
 .tetris__score, .tetris__next-wrapper {
   @include grid-columns-span((small: 2, large: 3));
-  display: flex;
+  display: none;
   align-self: start;
+  min-height: 180px;
   @include screen-medium-up {
     align-self: center;
   }
-  font-size: 56px;
+  font-size: 32px;
+  @include screen-large-up {
+    font-size: 56px;
+  }
   font-weight: bold;
   background-color: rgba($color-white, .75);
   padding: 16px;
+
+  @include screen-medium-up {
+    display: flex;
+  }
+}
+
+.tetris__next-wrapper {
+  flex-direction: column;
+
+  p {
+    margin-bottom: 16px;
+  }
 }
 
 .tetris__next-figure {
-  background-color: rgba($color-white, .0);
   display: grid;
   gap: 1px;
+  align-self: start;
 }

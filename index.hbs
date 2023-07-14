@@ -1,12 +1,12 @@
 {{> partials/header pageTitle="Tetris"}}
-<div class="tetris grid-container" data-controller="tetris">
+<div class="tetris grid-container">
   <div class="tetris__score" data-tetris-target="score"></div>
   <div class="tetris__game-field-wrapper">
     <div class="tetris__game-field" data-tetris-target='field'></div>
-    <div class="tetris__game-over hidden" data-tetris-target='loss'>
+    <div class="popupMessage hidden" data-tetris-target='loss'>
       <p>Game Over</p>
     </div>
-    <div class="tetris__paused hidden" data-tetris-target="pause">
+    <div class="popupMessage hidden" data-tetris-target="pause">
       <p>Paused</p>
     </div>
   </div>

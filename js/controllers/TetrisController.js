@@ -3,22 +3,33 @@ import { colors } from '../helpers/colors';
 import { tetrominos } from '../helpers/figures';
 
 export default class TetrisController extends Controller {
- static targets = ['field', 'loss', 'score', 'next', 'pause'];
+ static targets = [
+   'field',
+   'loss', 'pause',
+   'score', 'next', 'scoreMobile', 'nextMobile',
+ ];
 
- connect() {
-   this.createGrid();
-   this.createDOMCells();
-   this.gameLoop();
-   window.addEventListener('keydown', this.keyPressed);
-   window.addEventListener('keyup', () => {
-     this.keyHold = false;
-   });
-   window.addEventListener('click', this.restartGame);
- }
+ isMobile = window.innerWidth < 767;
 
-  gameWidth = 12;
+  scoreBlock = this.isMobile ? this.scoreMobileTarget : this.scoreTarget;
 
-  gameHeight = 18;
+  nextBlock = this.isMobile ? this.nextMobileTarget : this.nextTarget;
+
+  connect() {
+    console.log(this.nextBlock);
+    this.createGrid();
+    this.createDOMCells();
+    this.gameLoop();
+    document.addEventListener('keydown', this.keyPressed);
+    document.addEventListener('keyup', () => {
+      this.keyHold = false;
+    });
+    document.addEventListener('click', this.restartGame);
+  }
+
+  gameWidth = 10;
+
+  gameHeight = 20;
 
   startSpeed = 25;
 
@@ -81,7 +92,7 @@ export default class TetrisController extends Controller {
           }
 
           this.score += 5;
-          this.scoreTarget.innerHTML = `SCORE: ${this.score}`;
+          this.scoreBlock.innerHTML = `SCORE: ${this.score}`;
           for (let py = 0; py < 4; py++) {
             if (this.currentY + py < this.gameHeight - 1) {
               let isLine = true;
@@ -102,7 +113,7 @@ export default class TetrisController extends Controller {
           if (this.fullLines.length) {
             const bonus = 0.2 * this.fullLines.length;
             this.score += this.fullLines.length * 50 * (1 + bonus);
-            this.scoreTarget.innerHTML = `SCORE: ${this.score}`;
+            this.scoreBlock.innerHTML = `SCORE: ${this.score}`;
             this.drawGrid();
             await this.sleep(250);
 
@@ -186,7 +197,7 @@ export default class TetrisController extends Controller {
   }
 
   createDOMCells = () => {
-    const cellSize = `${95 / (this.gameHeight)}vmin`;
+    const cellSize = `${85 / (this.gameHeight)}vmin`;
     this.fieldTarget.style.gridTemplateColumns = `0px repeat(${this.gameWidth - 2}, ${cellSize}) 0px`;
     this.fieldTarget.style.gridTemplateRows = `repeat(${this.gameHeight - 1}, ${cellSize}) 0px`;
     for (let x = 0; x < this.gameWidth; x++) {
@@ -196,16 +207,16 @@ export default class TetrisController extends Controller {
         this.fieldTarget.appendChild(cell);
       }
     }
-    this.nextTarget.style.gridTemplateColumns = `repeat(4, ${50 / this.gameHeight}vmin)`;
-    this.nextTarget.style.gridRows = `repeat(4, ${50 / this.gameHeight}vmin)`;
+    this.nextBlock.style.gridTemplateColumns = `repeat(4, ${50 / this.gameHeight}vmin)`;
+    this.nextBlock.style.gridRows = `repeat(4, ${50 / this.gameHeight}vmin)`;
     for (let x = 0; x < 4; x++) {
       for (let y = 0; y < 4; y++) {
         const cell = document.createElement('div');
         cell.style.width = cell.style.height = `${50 / this.gameHeight}vmin`;
-        this.nextTarget.appendChild(cell);
+        this.nextBlock.appendChild(cell);
       }
     }
-    this.scoreTarget.innerHTML = `SCORE: ${this.score}`;
+    this.scoreBlock.innerHTML = `SCORE: ${this.score}`;
     document.body.classList.add('bkg-0');
     this.drawNextPiece();
   }
@@ -246,9 +257,9 @@ export default class TetrisController extends Controller {
   drawNextPiece = () => {
     for (let px = 0; px < 4; px++) {
       for (let py = 0; py < 4; py++) {
-        this.nextTarget.children[py * 4 + px].style.backgroundColor = 'rgba(255, 255, 255, 0)';
+        this.nextBlock.children[py * 4 + px].style.backgroundColor = 'rgba(255, 255, 255, 0)';
         if (tetrominos[this.nextPiece][4 * py + px] === 'X') {
-          this.nextTarget.children[py * 4 + px].style.backgroundColor = colors[this.nextPiece];
+          this.nextBlock.children[py * 4 + px].style.backgroundColor = colors[this.nextPiece];
         }
       }
     }
@@ -337,9 +348,9 @@ export default class TetrisController extends Controller {
     if (this.gameOver) {
       this.pieceCount = 0;
       this.score = 0;
-      this.scoreTarget.innerHTML = `SCORE: ${this.score}`;
+      this.scoreBlock.innerHTML = `SCORE: ${this.score}`;
       this.speed = this.startSpeed;
-      this.fieldTarget.classList.add('hidden');
+      this.lossTarget.classList.add('hidden');
       this.grid = [];
       this.gameOver = false;
       this.currentPiece = Math.floor(Math.random() * 7);

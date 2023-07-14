@@ -17,9 +17,13 @@
 </head>
 
 <body style="background-image: url(images/pictures/bg.jpg)">
-<div class="page-container">
+<div class="page-container" data-controller="tetris">
 <header class="header">
   <h1 class="header__title">
     Tetris
   </h1>
+  <div class="header__score" data-tetris-target="scoreMobile"></div>
+  <div class="header__next-wrapper">
+    <div class="header__next-figure" data-tetris-target='nextMobile'></div>
+  </div>
 </header>

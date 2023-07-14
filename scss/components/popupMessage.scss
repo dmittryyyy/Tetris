@@ -1,0 +1,22 @@
+@use '../variables' as *;
+
+.popupMessage {
+  position: absolute;
+  width: 100%;
+  padding: 16px;
+  color: $color-pink;
+  top: 40%;
+  margin: 0 auto;
+  background-color: rgba($color-black, 0.8);
+  text-align: center;
+  pointer-events: none;
+
+  p {
+    font-size: 120px;
+    justify-content: center;
+  }
+
+  &.hidden {
+    opacity: 0;
+  }
+}

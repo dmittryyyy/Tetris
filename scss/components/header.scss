@@ -1,6 +1,10 @@
 @use '../variables' as *;
+@use '../mixins' as *;
 
 .header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   background: rgb($color-black, 0.64);
   color: $color-white;
   padding: 12px 0;
@@ -13,4 +17,30 @@
   background: -webkit-linear-gradient(#FC3F5B, #FEA216, #61E646, #00E5F7, #F230F0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  @include screen-small-down {
+    margin-bottom: 16px;
+  }
+}
+
+.header__score, .header__next-wrapper {
+  justify-content: center;
+  @include screen-medium-up {
+    display: none;
+  }
+}
+
+.header__score {
+  @include screen-small-down {}
+  margin-bottom: 16px;
+}
+
+.header__next-figure {
+  display: grid;
+  gap: 1px;
+  align-self: start;
+  justify-content: center;
+
+  div {
+    border-radius: 2px;
+  }
 }
