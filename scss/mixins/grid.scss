@@ -1,0 +1,164 @@
+@use 'sass:map';
+@use 'media-queries' as *;
+@use '../variables/grid' as *;
+
+/// A mixin for the base styles of the grid container according to the design system.
+@mixin grid-container {
+  padding-left: $grid-padding-size;
+  padding-right: $grid-padding-size;
+}
+
+/// A mixin for the standard grid columns template according to the design system.
+@mixin grid {
+  grid-template-columns: $grid-template;
+  column-gap: $grid-gutter-size;
+  display: grid;
+}
+
+/// A mixin for the standard grid columns template starting from the "small" screen size (mobile
+/// phones and up).
+@mixin grid-small-up {
+  @include screen-small-up {
+    @include grid;
+  }
+}
+
+/// A mixin for the standard grid columns template starting from the "medium" screen size (tablets).
+@mixin grid-medium-up {
+  @include screen-medium-up {
+    @include grid;
+  }
+}
+
+/// A mixin for the standard grid columns template starting from the "large" screen size (desktop
+/// monitors).
+@mixin grid-large-up {
+  @include screen-large-up {
+    @include grid;
+  }
+}
+
+/// A mixin for the standard grid columns template starting from the "huge" screen size (large
+/// desktop monitors).
+@mixin grid-huge-up {
+  @include screen-huge-up {
+    @include grid;
+  }
+}
+
+$_inner-grid: false;
+$_inner-grid-set: false;
+/// A mixin which enables the inner grid context. An usage of the `grid-columns-width`
+/// and `grid-columns-span` mixins inside it will lead to the appropriate `grid-template-columns`
+/// properties addition for the custom inner grid.
+@mixin grid-with-inner-context {
+  $_inner-grid: true !global;
+  @content;
+  $_inner-grid: false !global;
+  $_inner-grid-set: false !global;
+}
+
+
+$_grid-default-offsets: ( tiny: 0, small: 0, medium: 0, large: 0, huge: 0 );
+$_grid-offset: $_grid-default-offsets;
+/// A mixin which declares the offset options for the grid columns. An usage of the
+/// `grid-columns-span` mixin inside it will lead to the appropriate
+/// `grid-column` property correction (for example: `grid-column: 2 / span 3` instead of just
+/// `grid-column: span 3`).
+/// @param {Map} $config - A configuration map. Each key corresponds to the appropriate screen size
+/// (can be `tiny`, `small`, `medium`, `large` and `huge`). Each value is the offset's width
+/// in grid columns for this specific screen size and upper.
+/// @example
+/// .page__navigation {
+///   @include grid-with-offset(( medium: 2 )) {
+///     @include grid-columns-span(( medium: 2, large: 3 ));
+///   }
+/// }
+@mixin grid-with-offset($config) {
+  $result: map.merge($_grid-default-offsets, $config);
+  $current: 0;
+  @each $key, $value in $result {
+    @if map.has-key($config, $key) {
+      $current: $value;
+    }
+    $result: map.set($result, $key, $current);
+  }
+  $_grid-offset: $result !global;
+  @content;
+  $_grid-offset: $_grid-default-offsets !global;
+}
+
+
+/// A base mixin which sets the element's width in grid columns.
+/// Inside of the `grid-with-inner-context` mixin's block also adds an appropriate
+/// `grid-template-columns` property value (and `display: grid` for the first inner grid's usage
+/// in this context).
+/// @param {Number} $number - A number of the grid columns.
+/// @param {Number} $offset [0] - An offset in grid columns.
+@mixin grid-columns-width($number, $offset: 0) {
+  @if $offset == 0 {
+    grid-column: span $number;
+  } @else {
+    grid-column: #{$offset + 1} / span $number;
+  }
+
+  @if $_inner-grid {
+    grid-template-columns: repeat($number, minmax(0, 1fr));
+    @if not($_inner-grid-set) {
+      $_inner-grid-set: true;
+      display: grid;
+    }
+  }
+}
+
+/// A mixin which sets the element's width to span all the grid columns.
+@mixin grid-columns-span-all {
+  grid-column: 1 / -1;
+}
+
+/// A mixin which sets the element's width in grid columns by the given configuration.
+/// Inside of the `grid-with-inner-context` mixin's block also adds appropriate
+/// `grid-template-columns` values. Also adds `display: grid` for the first inner grid's usage
+/// in this context.
+/// @param {Map} $config - A configuration map. Each key corresponds to the appropriate screen size
+/// (can be `tiny`, `small`, `medium`, `large` and `huge`). Each value is the element's width
+/// in grid columns for this specific screen size and upper.
+/// @example
+/// .page__navigation {
+///   @include grid-columns-span(( medium: 2, large: 3 ));
+/// }
+///
+/// .page__content-wrapper {
+///   // Also add `display: grid` and `grid-template-columns: repeat(6, minmax(0, 1fr))`:
+///   @include grid-with-inner-context {
+///     @include grid-columns-span(( medium: 6 ));
+///   }
+/// }
+@mixin grid-columns-span($config) {
+  $keys: map.keys($config);
+
+  @if not(map.has-key($config, tiny)) {
+    @include grid-columns-span-all;
+  }
+
+  @each $key in $keys {
+    $number: map.get($config, $key);
+    @if $key == small {
+      @include screen-small-up {
+        @include grid-columns-width($number, map.get($_grid-offset, small));
+      }
+    } @else if $key == medium {
+      @include screen-medium-up {
+        @include grid-columns-width($number, map.get($_grid-offset, medium));
+      }
+    } @else if $key == large {
+      @include screen-large-up {
+        @include grid-columns-width($number, map.get($_grid-offset, large));
+      }
+    } @else if $key == huge {
+      @include screen-huge-up {
+        @include grid-columns-width($number, map.get($_grid-offset, huge));
+      }
+    }
+  }
+}

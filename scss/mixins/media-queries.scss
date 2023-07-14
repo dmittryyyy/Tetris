@@ -1,0 +1,133 @@
+@use '../variables/grid' as *;
+
+/// A media query for selecting only screens with viewport width < 332px.
+@mixin screen-tiny-only {
+  @media (max-width: $grid-container-tiny-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width ≥ 332px.
+@mixin screen-small-up {
+  @media (min-width: $grid-container-small-min) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width < 768px
+@mixin screen-small-down {
+  @media (max-width: $grid-container-small-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width in
+/// [332px, 768px).
+@mixin screen-small-only {
+  @media (min-width: $grid-container-small-min) and (max-width: $grid-container-small-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width ≥ 768px.
+@mixin screen-medium-up {
+  @media (min-width: $grid-container-medium-min) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width < 1076px.
+@mixin screen-medium-down {
+  @media (max-width: $grid-container-medium-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width in
+/// [768px, 1076px).
+@mixin screen-medium-only {
+  @media (min-width: $grid-container-medium-min) and (max-width: $grid-container-medium-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width ≥ 1076px.
+@mixin screen-large-up {
+  @media (min-width: $grid-container-large-min) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width < 1368px.
+@mixin screen-large-down {
+  @media (max-width: $grid-container-large-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width in
+/// [1076px, 1368px).
+@mixin screen-large-only {
+  @media (min-width: $grid-container-large-min) and (max-width: $grid-container-large-max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width ≥ 1368px
+@mixin screen-huge-up {
+  @media (min-width: $grid-container-huge-min) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width from the given
+/// value.
+/// @param {length} $min - viewport minimum width (included).
+@mixin screen-min($min) {
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width up to the given
+/// value.
+/// @param {length} $max - viewport maximum width (not included).
+@mixin screen-max($max) {
+  @media (max-width: $max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width in the given
+/// interval.
+/// @param {Length} $min - viewport minimum width (included).
+/// @param {length} $max - viewport maximum width (not included).
+@mixin screen-interval($min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width in the first half
+/// of the given interval.
+/// @param {Length} $min - viewport minimum width (included).
+/// @param {length} $max - viewport maximum width (not included).
+@mixin screen-former-half-interval($min, $max) {
+  $max: $min + round(($max - $min) * 0.5) - 1px;
+
+  @include screen-interval ($min, $max) {
+    @content;
+  }
+}
+
+/// A media query for selecting screens with viewport width in the second half
+/// of the given interval.
+/// @param {Length} $min - viewport minimum width (included).
+/// @param {length} $max - viewport maximum width (not included).
+@mixin screen-latter-half-interval($min, $max) {
+  $min: $min + round(($max - $min) * 0.5);
+
+  @include screen-interval ($min, $max) {
+    @content;
+  }
+}

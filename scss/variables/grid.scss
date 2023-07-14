@@ -1,0 +1,90 @@
+/// The maximal "tiny" screen size (small mobile phones).
+$grid-container-tiny-max: 331px !default;
+/// The minimal "small" screen size (mobile phones).
+$grid-container-small-min: $grid-container-tiny-max + 1px;
+/// The maximal "small" screen size (mobile phones).
+$grid-container-small-max: 767px !default;
+/// The minimal "medium" screen size (tablets).
+$grid-container-medium-min: $grid-container-small-max + 1px;
+/// The maximal "medium" screen size (tablets).
+$grid-container-medium-max: 1075px !default;
+/// The minimal "large" screen size (desktop monitors).
+$grid-container-large-min: $grid-container-medium-max + 1px;
+/// The maximal "large" screen size (desktop monitors).
+$grid-container-large-max: 1367px !default;
+/// The minimal "huge" screen size (large desktop monitors).
+$grid-container-huge-min: $grid-container-large-max + 1px;
+/// The maximal "huge" screen size (large desktop monitors).
+$grid-container-huge-max: 1919px;
+
+/// The grid side paddings value for "tiny" screen size.
+$grid-padding-tiny: 12px !default;
+/// The grid side paddings value for "small" screen size.
+$grid-padding-small: 12px !default;
+/// The grid side paddings value for "medium" screen size.
+$grid-padding-medium: 16px !default;
+/// The grid side paddings value for "large" screen size.
+$grid-padding-large: 20px !default;
+/// The grid side paddings value for "huge" screen size.
+$grid-padding-huge: 24px !default;
+
+/// The grid gutter size on "tiny" screen size.
+$grid-gutter-tiny: 12px !default;
+/// The grid gutter size on "small" screen size.
+$grid-gutter-small: 12px !default;
+/// The grid gutter size on "medium" screen size.
+$grid-gutter-medium: 16px !default;
+/// The grid gutter size on "large" screen size.
+$grid-gutter-large: 20px !default;
+/// The grid gutter size on "huge" screen size and up.
+$grid-gutter-huge: 24px !default;
+
+/// The grid columns template for "tiny" screen size.
+$grid-template-tiny: repeat(4, minmax(0, 1fr)) !default;
+/// The grid columns template for "small" screen size.
+$grid-template-small: $grid-template-tiny !default;
+/// The grid columns template for "medium" screen size.
+$grid-template-medium: repeat(8, minmax(0, 1fr)) !default;
+/// The grid columns template for "large" screen size.
+$grid-template-large: repeat(12, minmax(0, 1fr)) !default;
+/// The grid columns template for "huge" screen size.
+$grid-template-huge: repeat(12, minmax(0, 1fr)) !default;
+
+:root {
+  --grid-gutter-size: #{$grid-gutter-tiny};
+  --grid-padding-size: #{$grid-padding-tiny};
+  --grid-template: #{$grid-template-tiny};
+
+  @media (min-width: $grid-container-small-min) {
+    --grid-gutter-size: #{$grid-gutter-small};
+    --grid-padding-size: #{$grid-padding-small};
+    --grid-template: #{$grid-template-small};
+  }
+
+  @media (min-width: $grid-container-medium-min) {
+    --grid-gutter-size: #{$grid-gutter-medium};
+    --grid-padding-size: #{$grid-padding-medium};
+    --grid-template: #{$grid-template-medium};
+  }
+
+  @media (min-width: $grid-container-large-min) {
+    --grid-gutter-size: #{$grid-gutter-large};
+    --grid-padding-size: #{$grid-padding-large};
+    --grid-template: #{$grid-template-large};
+  }
+
+  @media (min-width: $grid-container-huge-min) {
+    --grid-gutter-size: #{$grid-gutter-huge};
+    --grid-padding-size: #{$grid-padding-huge};
+    --grid-template: #{$grid-template-huge};
+  }
+}
+
+/// The design system's grid gutter's variable size.
+$grid-gutter-size: var(--grid-gutter-size);
+
+/// The design system's grid padding's variable size.
+$grid-padding-size: var(--grid-padding-size);
+
+/// The design system's variable grid columns template.
+$grid-template: var(--grid-template);
